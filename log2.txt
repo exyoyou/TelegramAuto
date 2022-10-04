@@ -1,0 +1,71 @@
+NewMessage.Event(
+    original_update=UpdateNewChannelMessage(
+        message=Message(
+            id=2642695, 
+            peer_id=PeerChannel(channel_id=1464166236), 
+            date=datetime.datetime(2022, 9, 19, 15, 16, 23, tzinfo=datetime.timezone.utc), 
+            message='', 
+            out=False, 
+            mentioned=False, 
+            media_unread=False, 
+            silent=False, 
+            post=False, 
+            from_scheduled=False, 
+            legacy=False, 
+            edit_hide=False, 
+            pinned=False, 
+            noforwards=False, 
+            from_id=PeerUser(user_id=1996836328), 
+            fwd_from=None, 
+            via_bot_id=None, 
+            reply_to=None, 
+            media=MessageMediaPhoto(
+                photo=Photo(
+                    id=5768143625899846911, access_hash=6018153014116119259, 
+                    file_reference=b'\x02WEg\\\x00(S\x07c(\x87\xc75W;\x04E\x9faP \x98\x17sl#r\xf7', 
+                    date=datetime.datetime(2021, 11, 2, 7, 10, 49, tzinfo=datetime.timezone.utc), 
+                    sizes=[PhotoStrippedSize(type='i', 
+                        bytes=b"\x01($\xb3x\xcc'\xc0'\x00T\x1b\x9b\xfb\xc7\xf3\xa9o\x18}\xa4\x8e\xf8\x15\x1a!c\xe8\x07z\xcd\xeevF\xca)
+                        \x89\xb9\xbf\xbc\x7f:77\xf7\x8f\xe7R\x18\xc6>V\x04\xd4D\x85\x19<R)8\xbd\x8d;s\x98\x10\x93\xce(\xa4\xb59\xb6C\
+                        xedEh\x8e\x19|L\xa1\xa8sr~\x82\x9bnAFL\xf2zf\x9d\x7f\xff\x00\x1fG\xe8*\xb5C\xdc\xeaJ\xf0\xb1q\x13\xca%\x89\x18
+                        \xaam\xcb\x96\xa5,ORO\xd4\xd2R\x1cc\xcak\xda\x7f\xc7\xac\x7fJ(\xb4\xff\x00\x8fX\xfe\x94V\x88\xe4\x97\xc4\xcaW\x
+                        c8\xc6\xe0\x90\xa4\x82\x07j\xaf\xb1\xff\x00\xb8\xdf\x95\x14T3\xa6\x0f\xdd\r\x8f\xfd\xc6\xfc\xa8\xd8\xff\x00\xdco
+                        \xca\x8a(\xb1|\xc6\xad\xb2\x95\xb7@\xc3\x07\x1d\r\x14QVr\xb3"),
+                        PhotoSize(type='m', w=284, h=320, size=7567), 
+                        PhotoSizeProgressive(type='x', w=320, h=360, sizes=[1337, 3067, 4738, 5956, 8892])], 
+                    dc_id=4, 
+                    has_stickers=False, 
+                    video_sizes=[]), 
+                    ttl_seconds=None), 
+            reply_markup=ReplyInlineMarkup(
+                rows=[
+                KeyboardButtonRow(
+                    buttons=[
+                    KeyboardButtonCallback(
+                        text='点击领取红包奖励', data=b'/rainaward', requires_password=False)])]), 
+            entities=[], 
+            views=None, 
+            forwards=None, 
+            replies=MessageReplies(replies=0, replies_pts=3589457, comments=False, recent_repliers=[], channel_id=None, max_id=None, read_max_id=None), edit_date=None, post_author=None, grouped_id=None, reactions=None, restriction_reason=[RestrictionReason(platform='ios', reason='porn', text="This message couldn't be displayed on your device because it contains pornographic materials.")], ttl_period=None), pts=3589457, pts_count=1), pattern_match=None, message=Message(id=2642695, peer_id=PeerChannel(channel_id=1464166236), date=datetime.datetime(2022, 9, 19, 15, 16, 23, tzinfo=datetime.timezone.utc), message='', out=False, mentioned=False, media_unread=False, silent=False, post=False, from_scheduled=False, legacy=False, edit_hide=False, pinned=False, noforwards=False, from_id=PeerUser(user_id=1996836328), fwd_from=None, via_bot_id=None, reply_to=None, media=MessageMediaPhoto(photo=Photo(id=5768143625899846911, access_hash=6018153014116119259, file_reference=b'\x02WEg\\\x00(S\x07c(\x87\xc75W;\x04E\x9faP \x98\x17sl#r\xf7', date=datetime.datetime(2021, 11, 2, 7, 10, 49, tzinfo=datetime.timezone.utc), sizes=[PhotoStrippedSize(type='i', bytes=b"\x01($\xb3x\xcc'\xc0'\x00T\x1b\x9b\xfb\xc7\xf3\xa9o\x18}\xa4\x8e\xf8\x15\x1a!c\xe8\x07z\xcd\xeevF\xca)\x89\xb9\xbf\xbc\x7f:77\xf7\x8f\xe7R\x18\xc6>V\x04\xd4D\x85\x19<R)8\xbd\x8d;s\x98\x10\x93\xce(\xa4\xb59\xb6C\xedEh\x8e\x19|L\xa1\xa8sr~\x82\x9bnAFL\xf2zf\x9d\x7f\xff\x00\x1fG\xe8*\xb5C\xdc\xeaJ\xf0\xb1q\x13\xca%\x89\x18\xaam\xcb\x96\xa5,ORO\xd4\xd2R\x1cc\xcak\xda\x7f\xc7\xac\x7fJ(\xb4\xff\x00\x8fX\xfe\x94V\x88\xe4\x97\xc4\xcaW\xc8\xc6\xe0\x90\xa4\x82\x07j\xaf\xb1\xff\x00\xb8\xdf\x95\x14T3\xa6\x0f\xdd\r\x8f\xfd\xc6\xfc\xa8\xd8\xff\x00\xdco\xca\x8a(\xb1|\xc6\xad\xb2\x95\xb7@\xc3\x07\x1d\r\x14QVr\xb3"), PhotoSize(type='m', w=284, h=320, size=7567), PhotoSizeProgressive(type='x', w=320, h=360, sizes=[1337, 3067, 4738, 5956, 8892])], dc_id=4, has_stickers=False, video_sizes=[]), ttl_seconds=None), reply_markup=ReplyInlineMarkup(rows=[KeyboardButtonRow(buttons=[KeyboardButtonCallback(text='点击领取红包奖励', data=b'/rainaward', requires_password=False)])]), entities=[], views=None, forwards=None, replies=MessageReplies(replies=0, replies_pts=3589457, comments=False, recent_repliers=[], channel_id=None, max_id=None, read_max_id=None), edit_date=None, post_author=None, grouped_id=None, reactions=None, restriction_reason=[RestrictionReason(platform='ios', reason='porn', text="This message couldn't be displayed on your device because it contains pornographic materials.")], ttl_period=None))
+
+
+
+NewMessage.Event(
+    original_update=UpdateNewMessage(
+        message=Message(
+            id=12863, 
+            peer_id=PeerUser(user_id=1996836328), 
+            date=datetime.datetime(2022, 9, 20, 16, 11, 19, tzinfo=datetime.timezone.utc), 
+            message='🥳 歡迎来到PornEmby公益服！\n\n🎩 身份:注册会员\n💰 精币: 252\n🍄 精享值:790\n💊 精豆: 167\n🚷 账号还能使用21天\n👀 未使用9天后,删除账号\n\n📢 频道: @PornembyClub\n👥 群组: @Pornemby', out=False, 
+            mentioned=False, media_unread=False, silent=False, post=False, from_scheduled=False, legacy=False, edit_hide=False, 
+            pinned=False, noforwards=False, from_id=None, fwd_from=None, via_bot_id=None, reply_to=None, 
+            media=MessageMediaPhoto(photo=Photo(id=5867457889852042446, access_hash=8352997931885788494, 
+            file_reference=b"\x01\x00\x002?c)\xe6'\xd1}\xca\xc0\x92\x8f\xc0\x0f\xeb\xd9|\xd3\xffU\xad\xc7", 
+            date=datetime.datetime(2021, 8, 30, 18, 56, 18, tzinfo=datetime.timezone.utc), 
+            sizes=[PhotoStrippedSize(type='i', bytes=b'\x01\x0f(\xcc\xb7\xb7k\x86*\x98\xe0d\xe7\xeb\x8aQi9\x00\x88\xfa\xe3\xb8\xa8C\x10\x18\x03\x80\xc3\x07\xde\xa4\xfbD\xd8\x1f
+            \xbcn(\x02\xcaZF\x14y\xceU\x8eN\x07<R\xfd\x92\xdf y\x8f\xcf\x1d*4\xbc*\x81^0\xe4\x0cd\x9e\xd4\xef\xb7.s\xe4
+            .s\x9e\xb5\x93S\xb9\xa2\xe5\xb1\x15\xdc\t\tM\x8cX0\xcf4Sg\x9b\xcd\n6\xed\x0b\x9e\xf4V\x91\xbd\xb5!\xda\xfa\x1f'), 
+            PhotoSize(type='m', w=320, h=120, size=6193), 
+            PhotoSizeProgressive(type='x', w=500, h=187, sizes=[1189, 2953, 5671, 7065, 10242])], dc_id=4, 
+            has_stickers=False, video_sizes=[]), ttl_seconds=None), 
+            reply_markup=ReplyInlineMarkup(rows=[KeyboardButtonRow(buttons=[KeyboardButtonCallback(text='🔋 服务器', data=b'/server', requires_password=False), KeyboardButtonCallback(text='📍 签到', data=b'/checkin', requires_password=False)]), KeyboardButtonRow(buttons=[KeyboardButtonCallback(text='🛠 账号', data=b'/setting', requires_password=False), KeyboardButtonCallback(text='✅ 关闭', data=b'/close', requires_password=False), KeyboardButtonCallback(text='🆘 帮助', data=b'/helpme', requires_password=False)])]), entities=[MessageEntityMention(offset=101, length=13), MessageEntityMention(offset=122, length=9)], views=None, forwards=None, replies=None, edit_date=None, post_author=None, grouped_id=None, reactions=None, restriction_reason=[], ttl_period=None), pts=28769, pts_count=1), pattern_match=None, message=Message(id=12863, peer_id=PeerUser(user_id=1996836328), date=datetime.datetime(2022, 9, 20, 16, 11, 19, tzinfo=datetime.timezone.utc), message='🥳 歡迎来到PornEmby公益服！\n\n🎩 身份:注册会员\n💰 精币: 252\n🍄 精享值:790\n💊 精豆: 167\n🚷 账号还能使用21天\n👀 未使用9天后,删除账号\n\n📢 频道: @PornembyClub\n👥 群组: @Pornemby', out=False, mentioned=False, media_unread=False, silent=False, post=False, from_scheduled=False, legacy=False, edit_hide=False, pinned=False, noforwards=False, from_id=None, fwd_from=None, via_bot_id=None, reply_to=None, media=MessageMediaPhoto(photo=Photo(id=5867457889852042446, access_hash=8352997931885788494, file_reference=b"\x01\x00\x002?c)\xe6'\xd1}\xca\xc0\x92\x8f\xc0\x0f\xeb\xd9|\xd3\xffU\xad\xc7", date=datetime.datetime(2021, 8, 30, 18, 56, 18, tzinfo=datetime.timezone.utc), sizes=[PhotoStrippedSize(type='i', bytes=b'\x01\x0f(\xcc\xb7\xb7k\x86*\x98\xe0d\xe7\xeb\x8aQi9\x00\x88\xfa\xe3\xb8\xa8C\x10\x18\x03\x80\xc3\x07\xde\xa4\xfbD\xd8\x1f\xbcn(\x02\xcaZF\x14y\xceU\x8eN\x07<R\xfd\x92\xdf y\x8f\xcf\x1d*4\xbc*\x81^0\xe4\x0cd\x9e\xd4\xef\xb7.s\xe4.s\x9e\xb5\x93S\xb9\xa2\xe5\xb1\x15\xdc\t\tM\x8cX0\xcf4Sg\x9b\xcd\n6\xed\x0b\x9e\xf4V\x91\xbd\xb5!\xda\xfa\x1f'), PhotoSize(type='m', w=320, h=120, size=6193), PhotoSizeProgressive(type='x', w=500, h=187, sizes=[1189, 2953, 5671, 7065, 10242])], dc_id=4, has_stickers=False, video_sizes=[]), ttl_seconds=None), reply_markup=ReplyInlineMarkup(rows=[KeyboardButtonRow(buttons=[KeyboardButtonCallback(text='🔋 服务器', data=b'/server', requires_password=False), KeyboardButtonCallback(text='📍 签到', data=b'/checkin', requires_password=False)]), KeyboardButtonRow(buttons=[KeyboardButtonCallback(text='🛠 账号', data=b'/setting', requires_password=False), KeyboardButtonCallback(text='✅ 关闭', data=b'/close', requires_password=False), KeyboardButtonCallback(text='🆘 帮助', data=b'/helpme', requires_password=False)])]), entities=[MessageEntityMention(offset=101, length=13), MessageEntityMention(offset=122, length=9)], views=None, forwards=None, replies=None, edit_date=None, post_author=None, grouped_id=None, reactions=None, restriction_reason=[], ttl_period=None))
