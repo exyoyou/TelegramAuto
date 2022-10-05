@@ -76,6 +76,9 @@ def writeQuestionAnswerJson(message):
             print("问题:\n{}\n已经存在忽略存储{}:".format(question, answer))
             return
         answer = message[index + len(answer_str): index + len(answer_str) + 1]
+        answer_index_start = message.find(answer)
+        answer_index_end = message.find("\n", answer_index_start)
+        answer = message[answer_index_start + 2:answer_index_end]
         QuestionAnswerDic[question] = answer
         # with open(fileName, "w") as dump_f:
         #     json.dump(QuestionAnswerDic, dump_f, ensure_ascii=False)
@@ -98,19 +101,21 @@ def GetQuestionAnswer(message):
     if match:
         message = message[match.regs[0][1]:len(message)]
         return GetQuestionAnswer(message)
-    #     index = getStrQuestionMarkIndex(message)
-    #     question = message[0:index]
-    #     if question in QuestionAnswerDic and QuestionAnswerDic[question] != "":
-    #         return QuestionAnswerDic[question]
-    # print("问题:{}\n没有答案".format(message))
-    # return ""
     index = message.find('\n')
     question = message[0:index]
     question.strip()
     for questionData in QuestionAnswerDic.keys():
         if question in questionData:
-            return QuestionAnswerDic[questionData], question
+            answer = QuestionAnswerDic[questionData]
+            messages = message.split("\n")
+            for str in messages:
+                if answer in str:
+                    answer_str = str[0:1]
+                    if answer_str.upper() == "A" or answer_str.upper() == "B" or answer_str.upper() == "C" or answer_str.upper() == "D":
+                        answer = answer_str.upper()
+                        return answer, question
     return None, question
+
 
 initQuestionAnswerJson()
 writeQuestionAnswerJson(str)
