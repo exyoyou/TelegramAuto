@@ -20,28 +20,17 @@ D:朝鲜
 """
 
 
-def getStrQuestionMarkIndex(str):
-    index = str.find("？")
-    if index == -1:
-        index = str.find("?")
-        return index, "?"
-    return index, "？"
-
-
 def getStrQuestionAnswerIndex(str):
-    index = str.find("答案为：")
-    if index == -1:
-        index = str.find("答案为:")
-        return index, "答案为:"
-    return index, "答案为："
+    # index = str.find("答案为：")
+    # if index == -1:
+    #     index = str.find("答案为:")
+    #     return index, "答案为:"
+    # return index, "答案为："
+    return re.compile(r"答案为(:|：)").search(str.strip())
 
 
 def getGetQuestionAnswerMatch(str):
-    match = re.match(r"问题\d+：", str)
-    if match:
-        return match
-    match = re.match(r"问题\d+:", str)
-    return match
+    return re.match(r"问题\d+(:|：)", str.strip())
 
 
 # 初始化列表
@@ -65,26 +54,30 @@ def writeQuestionAnswerJson(message):
     match = getGetQuestionAnswerMatch(message)
     if match:
         message = message[match.regs[0][1]:len(message)]
-        index, answer_str = getStrQuestionAnswerIndex(message)
-        if index == -1:
+        search_re = getStrQuestionAnswerIndex(message)
+        if not search_re:
+            print("问题:{}\n问题都没有答案 所以不保存".format(message))
             return
-        # question = message[0:index]
-        # question = question.strip()
 
         answer, question = GetQuestionAnswer(message)
         if answer and answer != "":  # 存在答案直接返回
-            print("问题:\n{}\n已经存在忽略存储{}:".format(question, answer))
+            print("问题:\n{}\n已经存在答案 忽略存储{}:".format(question, answer))
             return
-        answer = message[index + len(answer_str): index + len(answer_str) + 1]
-        answer_index_start = message.find(answer)
+        # 获取答案（A、B、C、D ）字符
+        answer = message[search_re.regs[1][0]:search_re.regs[1][1]]
+        # 获取答案结果的开始index位置
+        answer_index_start = message.find(answer) + 2
+        # 获取答案结果的结束index位置
         answer_index_end = message.find("\n", answer_index_start)
-        answer = message[answer_index_start + 2:answer_index_end]
+        # 获取答案
+        answer = message[answer_index_start:answer_index_end]
+        # 把答案存入在表中
         QuestionAnswerDic[question] = answer
         # with open(fileName, "w") as dump_f:
         #     json.dump(QuestionAnswerDic, dump_f, ensure_ascii=False)
         #     print("存储问题:\n{} \n答案是：{}".format(question, answer))
     else:
-        print("问题:{}\n没有公布答案 不需要保存".format(message))
+        print("问题:{}\n问题都没有不保存".format(message))
 
 
 # 保存问题列表到文件中
