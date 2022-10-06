@@ -73,9 +73,7 @@ def writeQuestionAnswerJson(message):
         answer = message[answer_index_start:answer_index_end]
         # 把答案存入在表中
         QuestionAnswerDic[question] = answer
-        # with open(fileName, "w") as dump_f:
-        #     json.dump(QuestionAnswerDic, dump_f, ensure_ascii=False)
-        #     print("存储问题:\n{} \n答案是：{}".format(question, answer))
+        print("问题:{}\n保存答案{}成功".format(question, answer))
     else:
         print("问题:{}\n问题都没有不保存".format(message))
 

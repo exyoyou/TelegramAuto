@@ -33,6 +33,8 @@ async def main():
         if message and message.message and len(message.message) > 5:
             QuestionAnswer.writeQuestionAnswerJson(message.message)
         # await asyncio.sleep(0.1)
+        if message and message.sender and message.sender.username and "bot" in message.sender.username:
+            print(message.sender.username)
         if index % 200 == 0:
             QuestionAnswer.writeQuestionAnswerJsonToFile()
         if message and message.id:

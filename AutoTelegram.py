@@ -61,6 +61,8 @@ DC 2
 
 '''
 
+pronembyTitle = 'Pornemby 【考研交流群】'
+
 
 class AutoTelegram(object):
 
@@ -107,8 +109,9 @@ class AutoTelegram(object):
                                          shell=True)  # 播放不影响其他代码操作
                     # os.killpg(p.pid, signal.SIGUSR1)
                     self.print("linux 播放红包声音完成")
-            except subprocess.CalledProcessError as error:
-                self.print("播放红包来了声音失败")
+            # except subprocess.CalledProcessError as error:
+            except Exception as error:
+                self.print("播放红包来了声音失败 error:{}".format(error))
 
         thread = threading.Thread(target=run)
         thread.start()
@@ -125,7 +128,7 @@ class AutoTelegram(object):
             elif isinstance(btn, MessageButton):
                 if btn and btn.text and text in btn.text:
                     try:
-                        await asyncio.sleep(0.2)
+                        await asyncio.sleep(0.5)
                         await btn.click()
                         self.print("点击{}按钮成功".format(btn.text))
                     except BaseException as error:
@@ -152,28 +155,29 @@ class AutoTelegram(object):
         # EmbyGroup 问题的 走这个方法 回答和存储新问题答案
         async def emby_group_question_answer(event, resetSendCount=3):
             message = event.message
-            if event.chat_id == self.pronEmbyGropChatId:
+            if event.chat_id == self.pronEmbyGropChatId and message and message.sender and message.sender.username and "bot" in message.sender.username:
                 if QuestionAnswer.getGetQuestionAnswerMatch(message.message):
                     # await client.send_message(PeerChannel(channel_id=1464166236), "A")
-                    self.print("自动回复 问题：{}".format(message.message))
+                    # self.print("自动回复 问题：{}".format(message.message))
                     answer, question = QuestionAnswer.GetQuestionAnswer(message.message)
                     if not answer or answer == "":
                         answer = "A"
                     else:
-                        self.print("问题 :{} \n已经存在本地问题列表中\n答案为:{}".format(question, answer))
+                        self.print("{} \n已经存在本地问题列表中\n答案为:{}".format(question, answer))
                     if message.message.find("A") != -1 or message.message.find("B") != -1 or message.message.find(
                             "C") != -1:
                         try:
+                            await asyncio.sleep(1)
                             await client.send_message(event.chat, answer)
-                        except():
+                            self.print("{} \n发送了答案：{}".format(message.message, answer))
+                        except Exception as error:
                             resetSendCount = resetSendCount - 1
                             if resetSendCount > 0:
-                                await emby_group_question_answer(event, resetSendCount)
                                 self.print("发送消息错误{} 正在从新发送 结果{}".format(resetSendCount, answer))
+                                await emby_group_question_answer(event, resetSendCount)
                             else:
-                                self.print("发送消息错误 已经重试多次依然失败")
-
-                    QuestionAnswer.writeQuestionAnswerJson(message.message)
+                                self.print("发送消息错误 已经重试多次依然失败 error{}".format(error))
+                        QuestionAnswer.writeQuestionAnswerJson(message.message)
 
         # await client.send_message('EmbyPublicBot', '/checkin')
 
