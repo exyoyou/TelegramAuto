@@ -23,7 +23,7 @@ from telethon import TelegramClient, events
 
 # These example values won't work. You must get your own api_id and
 # api_hash from https://my.telegram.org, under API Development.
-from telethon.tl.types import PeerChannel, KeyboardButtonCallback
+from telethon.tl.types import PeerChannel, KeyboardButtonCallback, Channel
 
 import QuestionAnswer
 
@@ -62,6 +62,9 @@ DC 2
 '''
 
 pronembyTitle = 'Pornemby 【考研交流群】'
+pinYunEmby = '品云Emby | 水群赚钱养 V'
+
+sendContentInt = 100
 
 
 class AutoTelegram(object):
@@ -74,9 +77,10 @@ class AutoTelegram(object):
 
     count = 0
     name = ''
+    # pronEmby群的id
     pronEmbyGropChatId = -1001464166236
-
-    sendMessageContent = [
+    # auto 发送到pronemby的消息列表
+    sendPronEmbyMessageContent = [
         "大佬们你们好呀！！",
         "大家多说话 红包来的快",
         # "红包红包快快来",
@@ -91,10 +95,30 @@ class AutoTelegram(object):
         "哈哈哈哈哈哈",
         "狼友们你们好呀",
         "说句话证明我还在群里",
+        "emby 是我发现的新大陆",
+    ]
+
+    sendPinYunEmbyMessageContent = [
+        "大佬们你们好呀！！",
+        "冒个泡 说我我还存在",
+        "大哥们 你们好呀",
+        "哥哥们你们好呀",
+        "哈咯 大佬们你们好呀",
+        "老师们你们好呀",
+        "哈哈哈哈哈哈哈哈",
+        "我来了 冒个泡呀",
+        "哈哈哈哈哈哈",
+        "朋友们你们好呀",
+        "说句话证明我还在群里",
+        "品云666 大爱",
+        "品云的大佬 你们好呀",
+        "emby 是我发现的新大陆",
     ]
 
     pronEmbyGropMessageCount = 0
     sendMessageToEmbyGroupIs = False
+    sendMessageToPingYunGroupIs = False
+    pinYunEmbyMessageCount = 0
 
     def playMusic(self):
         def run():
@@ -138,17 +162,31 @@ class AutoTelegram(object):
                         else:
                             self.print("点击{}按钮失败 已经重试多次 还是失败 error:\n{}".format(btn.text, error))
 
+        # 发送问候消息到品云
+        async def sendPinYunEmbyGroup():
+            if self.sendMessageToPingYunGroupIs and self.pinYunEmbyMessageCount > sendContentInt:
+                self.pinYunEmbyMessageCount = 0
+                self.sendMessageToPingYunGroupIs = False
+                try:
+                    content = self.sendPinYunEmbyMessageContent[
+                        random.randint(0, len(self.sendPinYunEmbyMessageContent) - 1)]
+                    await client.send_message(pinYunEmby, content)
+                    self.print("发送了问候消息：{} 到品云".format(content))
+                except Exception as error:
+                    self.print("发送消息 品云 错误 {}".format(error))
+
         async def sendMessageToEmbyGroup():
-            if self.sendMessageToEmbyGroupIs and self.pronEmbyGropMessageCount > 100:
+            if self.sendMessageToEmbyGroupIs and self.pronEmbyGropMessageCount > sendContentInt:
                 self.pronEmbyGropMessageCount = 0
                 self.sendMessageToEmbyGroupIs = False
                 try:
-                    content = self.sendMessageContent[random.randint(0, len(self.sendMessageContent) - 1)]
+                    content = self.sendPronEmbyMessageContent[
+                        random.randint(0, len(self.sendPronEmbyMessageContent) - 1)]
                     await client.send_message(PeerChannel(channel_id=1464166236), content)
-                    self.print("发送了问候消息到pronEmby")
+                    self.print("发送了问候消息 {} 到pronEmby".format(content))
                     # self.print("暂时不发")
                 except():
-                    self.print("发送消息错误")
+                    self.print("发送消息 pronemby 错误")
 
                     # self.print((await client.get_me()).stringify())
 
@@ -331,6 +369,11 @@ class AutoTelegram(object):
                 await sendMessageToEmbyGroup()
             # if count >= 2:
             #     sys.exit()
+            elif message and message.chat and isinstance(message.chat, Channel) and message.chat.title == pinYunEmby:
+                self.pinYunEmbyMessageCount += 1  # self.pinYunEmbyMessageCount + 1 
+                await sendPinYunEmbyGroup()
+                if self.pinYunEmbyMessageCount > sendContentInt * 3 and not self.sendMessageToPingYunGroupIs:
+                    self.sendMessageToPingYunGroupIs = True
 
         # 编辑信息
         async def edit_msg_event_handler(event: events.MessageEdited.Event):
@@ -361,6 +404,8 @@ class AutoTelegram(object):
             # self.print('sleep')
             await asyncio.sleep(random.randint(60 * 50, 60 * 90))
             self.sendMessageToEmbyGroupIs = True
+            self.sendMessageToPingYunGroupIs = True
+            await sendPinYunEmbyGroup()
             await sendMessageToEmbyGroup()
 
     def __init__(self, name):
