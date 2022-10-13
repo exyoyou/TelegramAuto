@@ -64,7 +64,7 @@ def writeQuestionAnswerJson(message):
             print("问题:\n{}\n已经存在答案 忽略存储{}:".format(question, answer))
             return
         # 获取答案（A、B、C、D ）字符
-        answer = message[search_re.regs[1][0]:search_re.regs[1][1]]
+        answer = message[search_re.regs[1][0] + 1:search_re.regs[1][1] + 1]
         # 获取答案结果的开始index位置
         answer_index_start = message.find(answer) + 2
         # 获取答案结果的结束index位置

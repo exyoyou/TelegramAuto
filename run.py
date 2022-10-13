@@ -10,6 +10,8 @@ from telethon import TelegramClient, events
 # api_hash from https://my.telegram.org, under API Development.
 from telethon.tl.types import PeerChannel, PeerUser
 
+from TGLogin import GetClient
+
 '''
 api信息
 
@@ -44,14 +46,15 @@ DC 2
 
 '''
 
-api_id = 13197610
-api_hash = 'a21f42d8391234581435652ea1162ca7'
+# api_id = 13197610
+# api_hash = 'a21f42d8391234581435652ea1162ca7'
 
 count = 0
 
 
 async def main():
-    client = TelegramClient('cyounim_sing', api_id, api_hash)
+    # client = TelegramClient('cyounim_sing', api_id, api_hash)
+    client = GetClient("cyounim_sing")
     await client.start()
 
     # 签到

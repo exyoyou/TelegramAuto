@@ -17,6 +17,8 @@ import threading
 from telethon.errors import ChatWriteForbiddenError, MessageIdInvalidError
 from telethon.tl.custom import MessageButton
 
+from TGLogin import GetClient
+
 if sys.platform == "darwin":
     import playsound as playsound
 from telethon import TelegramClient, events
@@ -26,6 +28,8 @@ from telethon import TelegramClient, events
 from telethon.tl.types import PeerChannel, KeyboardButtonCallback, Channel
 
 import QuestionAnswer
+
+import requests
 
 '''
 api信息
@@ -62,18 +66,17 @@ DC 2
 '''
 
 pronembyTitle = 'Pornemby 【考研交流群】'
-pinYunEmby = '品云Emby | 水群赚钱养 V'
+pinYunEmbyTitle = '品云Emby | 水群赚钱养 V'
 
 sendContentInt = 100
-
 
 class AutoTelegram(object):
 
     def print(self, *args):
         print("{}的打印内容:\n".format(self.name), *args)
 
-    api_id = 13197610
-    api_hash = 'a21f42d8391234581435652ea1162ca7'
+    # api_id = 13197610
+    # api_hash = 'a21f42d8391234581435652ea1162ca7'
 
     count = 0
     name = ''
@@ -117,8 +120,10 @@ class AutoTelegram(object):
 
     pronEmbyGropMessageCount = 0
     sendMessageToEmbyGroupIs = False
+    pronEmbyGroupObject = None
     sendMessageToPingYunGroupIs = False
     pinYunEmbyMessageCount = 0
+    pingyunGroupObject = None
 
     def playMusic(self):
         def run():
@@ -142,8 +147,19 @@ class AutoTelegram(object):
 
     async def main(self):
         # client = TelegramClient('cyounim', self.api_id, self.api_hash)name
-        client = TelegramClient(self.name, self.api_id, self.api_hash)
+        # client = TelegramClient(self.name, self.api_id, self.api_hash)
+        client = GetClient(self.name)
         await client.start()
+        dialogs = await client.get_dialogs()
+        for dialog in dialogs:
+            if dialog and dialog.name and pinYunEmbyTitle in dialog.name:
+                self.pingyunGroupObject = dialog.entity
+                break
+
+        for dialog in dialogs:
+            if dialog and dialog.name and pronembyTitle in dialog.name:
+                self.pronEmbyGroupObject = dialog.entity
+                break
 
         async def onClickBtn(btn, text, errorCount=3):
             if isinstance(btn, list):
@@ -152,7 +168,7 @@ class AutoTelegram(object):
             elif isinstance(btn, MessageButton):
                 if btn and btn.text and text in btn.text:
                     try:
-                        await asyncio.sleep(0.5)
+                        await asyncio.sleep(0.1)
                         await btn.click()
                         self.print("点击{}按钮成功".format(btn.text))
                     except BaseException as error:
@@ -170,7 +186,7 @@ class AutoTelegram(object):
                 try:
                     content = self.sendPinYunEmbyMessageContent[
                         random.randint(0, len(self.sendPinYunEmbyMessageContent) - 1)]
-                    await client.send_message(pinYunEmby, content)
+                    await client.send_message(self.pingyunGroupObject, content)
                     self.print("发送了问候消息：{} 到品云".format(content))
                 except Exception as error:
                     self.print("发送消息 品云 错误 {}".format(error))
@@ -182,7 +198,7 @@ class AutoTelegram(object):
                 try:
                     content = self.sendPronEmbyMessageContent[
                         random.randint(0, len(self.sendPronEmbyMessageContent) - 1)]
-                    await client.send_message(PeerChannel(channel_id=1464166236), content)
+                    await client.send_message(self.pronEmbyGroupObject, content)
                     self.print("发送了问候消息 {} 到pronEmby".format(content))
                     # self.print("暂时不发")
                 except():
@@ -369,7 +385,8 @@ class AutoTelegram(object):
                 await sendMessageToEmbyGroup()
             # if count >= 2:
             #     sys.exit()
-            elif message and message.chat and isinstance(message.chat, Channel) and message.chat.title == pinYunEmby:
+            elif message and message.chat and isinstance(message.chat,
+                                                         Channel) and message.chat.title == pinYunEmbyTitle:
                 self.pinYunEmbyMessageCount += 1  # self.pinYunEmbyMessageCount + 1 
                 await sendPinYunEmbyGroup()
                 if self.pinYunEmbyMessageCount > sendContentInt * 3 and not self.sendMessageToPingYunGroupIs:

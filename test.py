@@ -1,42 +1,44 @@
 #!/usr/bin/python3
-import asyncio
-import re
+import base64
+import io
+import os
 
-from telethon import TelegramClient
+import requests
+import json
 
-import QuestionAnswer
-
-api_id = 13197610
-api_hash = 'a21f42d8391234581435652ea1162ca7'
-str = """
-我问题19:《桔梗谣》是哪里的民歌？
-
-A:菲律宾
-B:阿富汗
-C:日本
-D:朝鲜
-
-答案为：D
-
-桔梗谣是朝鲜族民歌。 “道拉基”是朝鲜族人民喜爱吃的一种野菜，叫“桔梗”，所以这首民歌叫《桔梗谣》，又名《道拉基》。
-"""
+from twocaptcha import TwoCaptcha
 
 
-async def main():
-    # client = TelegramClient('raynou', api_id, api_hash)
-    # await client.start()
-    # client.get_messages()
-    # print("终于扫描完了以前所有问题")
-    str1 = str.strip()
-    # compile = re.compile(r"问题\d+(:|：)")
-    # match = compile.match(str1)
-    # print(match)
-    compile = re.compile(r"答案为(:|：)")
-    search_re = compile.search(str)
-    answer_index_str = str1[search_re.regs[1][0]:search_re.regs[1][1]]
-    answer_index = str1.find(answer_index_str)
-    answer = str1[answer_index + 2:str1.find("\n", answer_index + 2)]
-    print(search_re)
+class GetImgeCode(object):
+    _custom_url_in = "http://2captcha.com/in.php"
+    _custom_url_out = "http://2captcha.com/res.php"
+    _headers = {
+        'Content-Type': 'application/json'
+    }
+    _key = "49c187f0def8a31cec0ef6a3b8e1c92a"
+
+    def GetCode(self, image):
+        imgBase64 = base64.b64encode(image).decode()
+        # payload = {
+        #     "data": imgBase64,
+        #     "key": self._key,
+        # }
+        # print(imgBase64)
+        # resp = requests.post(self._custom_url_in, headers=self._headers, data=json.dumps(payload),)
+        # # resp = requests.post(self._custom_url + "?key=" + self._key + "&data=" + imgBase64)
+        # print(resp)
+        # api_key = os.getenv('APIKEY_2CAPTCHA', 'YOUR_API_KEY')
+        solver = TwoCaptcha(self._key)
+        # params = {
+        #     'key': self._key,
+        #     "body": imgBase64,
+        # }
+        # endpoint = 'http://2captcha.com/in.php'
+        # response = requests.post(endpoint, params=params)
+        # captcha_id = response.text.split('|')[1]
+        solver.
 
 
-asyncio.run(main())
+f = open("jmsyzm.jpg", "rb")
+img = f.read()
+GetImgeCode().GetCode(img)
