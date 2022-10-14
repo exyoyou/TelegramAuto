@@ -10,6 +10,7 @@ from telethon import TelegramClient, events
 # api_hash from https://my.telegram.org, under API Development.
 from telethon.tl.types import PeerChannel, PeerUser
 
+import TGLogin
 from TGLogin import GetClient
 
 '''
@@ -54,8 +55,10 @@ count = 0
 
 async def main():
     # client = TelegramClient('cyounim_sing', api_id, api_hash)
-    client = GetClient("cyounim_sing")
-    await client.start()
+    # client = GetClient("cyounim_sing")
+    tg_login = await TGLogin.TgLogin.create("kaikai")
+    client = tg_login.get_client()
+    # await client.start()
 
     # 签到
     async def checkSing():
@@ -71,5 +74,6 @@ async def main():
 
     await checkSing()
     sys.exit()
+
 
 asyncio.run(main())

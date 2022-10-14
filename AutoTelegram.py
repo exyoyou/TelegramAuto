@@ -17,7 +17,7 @@ import threading
 from telethon.errors import ChatWriteForbiddenError, MessageIdInvalidError
 from telethon.tl.custom import MessageButton
 
-from TGLogin import GetClient
+import TGLogin
 
 if sys.platform == "darwin":
     import playsound as playsound
@@ -69,6 +69,7 @@ pronembyTitle = 'Pornemby 【考研交流群】'
 pinYunEmbyTitle = '品云Emby | 水群赚钱养 V'
 
 sendContentInt = 100
+
 
 class AutoTelegram(object):
 
@@ -148,8 +149,9 @@ class AutoTelegram(object):
     async def main(self):
         # client = TelegramClient('cyounim', self.api_id, self.api_hash)name
         # client = TelegramClient(self.name, self.api_id, self.api_hash)
-        client = GetClient(self.name)
-        await client.start()
+        tg_login = await TGLogin.TgLogin.create(self.name)
+        # await client.start()
+        client = tg_login.get_client()
         dialogs = await client.get_dialogs()
         for dialog in dialogs:
             if dialog and dialog.name and pinYunEmbyTitle in dialog.name:

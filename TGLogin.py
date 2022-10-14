@@ -1,4 +1,6 @@
+import asyncio
 import json
+from dataclasses import dataclass
 
 import requests
 from telethon import TelegramClient
@@ -12,8 +14,29 @@ if rule["countryCode"] in "HK":
     api_hash = '03849446e0382cc148d2365d642a2d91'
 
 
-def GetClient(sessionName):
-    return TelegramClient(sessionName, api_id, api_hash)
+@dataclass
+class TgLogin:
+    _session_name = ""
+    _client = None
+    _dialogs = None
 
+    @classmethod
+    async def create(cls, session_name=""):
+        obj = cls()
+        obj._session_name = session_name
+        obj._client = TelegramClient(session_name, api_id=api_id, api_hash=api_hash)
+        try:
+            await obj._client.start()
+        except BaseException as e:
+            return await TgLogin.create(session_name + "_1")
+        obj._dialogs = await obj._client.get_dialogs()
+        return obj
 
-    
+    def get_client(self):
+        return self._client
+
+    # 获取某个名字消息的最后一条消息
+    def get_last_message_by_name(self, name, ):
+        for dialog in self._dialogs:
+            if name == dialog.name:
+                return dialog.message
