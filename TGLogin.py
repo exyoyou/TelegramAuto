@@ -35,6 +35,9 @@ class TgLogin:
     def get_client(self):
         return self._client
 
+    async def update_dialos(self):
+        self._dialogs = await self._client.get_dialogs()
+
     # 获取某个名字消息的最后一条消息
     def get_last_message_by_name(self, name, ):
         for dialog in self._dialogs:
