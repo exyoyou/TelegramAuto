@@ -170,13 +170,13 @@ class AutoTelegram(object):
             elif isinstance(btn, MessageButton):
                 if btn and btn.text and text in btn.text:
                     try:
-                        await asyncio.sleep(0.1)
+                        # await asyncio.sleep(0.1)
                         await btn.click()
                         self.print("点击{}按钮成功".format(btn.text))
                     except BaseException as error:
                         if errorCount > 0:
                             self.print("点击{}按钮失败 正在重试：{}".format(btn.text, errorCount))
-                            await onClickBtn(btn, text, errorCount=errorCount - 1)
+                            # await onClickBtn(btn, text, errorCount=errorCount - 1)
                         else:
                             self.print("点击{}按钮失败 已经重试多次 还是失败 error:\n{}".format(btn.text, error))
 
