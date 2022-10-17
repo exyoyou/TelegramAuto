@@ -66,7 +66,7 @@ DC 2
 '''
 
 pronembyTitle = 'Pornemby 【考研交流群】'
-pinYunEmbyTitle = '品云Emby | 水群赚钱养 V'
+pinYunEmbyTitle = '品云Emby'
 
 sendContentInt = 100
 
@@ -154,12 +154,12 @@ class AutoTelegram(object):
         client = tg_login.get_client()
         dialogs = await client.get_dialogs()
         for dialog in dialogs:
-            if dialog and dialog.name and pinYunEmbyTitle in dialog.name:
+            if dialog and dialog.name and pinYunEmbyTitle == dialog.name:
                 self.pingyunGroupObject = dialog.entity
                 break
 
         for dialog in dialogs:
-            if dialog and dialog.name and pronembyTitle in dialog.name:
+            if dialog and dialog.name and pronembyTitle == dialog.name:
                 self.pronEmbyGroupObject = dialog.entity
                 break
 
