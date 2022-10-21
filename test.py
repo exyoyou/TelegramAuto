@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import asyncio
 import os
+import time
 
 import TGLogin
 from Captcha import TwoCaptcha
@@ -23,5 +24,6 @@ async def run():
 
 # if message.photo:
 
-
-asyncio.run(run())
+nowTime = int(time.strftime("%H", time.localtime()))
+print(nowTime)
+# asyncio.run(run())

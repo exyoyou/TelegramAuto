@@ -9,16 +9,12 @@ import subprocess
 import sys
 import threading
 
-# try:
-#     import ddddocr
-# except:
-#     print("没有安装 ddddocr")
 import time
-
 from telethon.errors import ChatWriteForbiddenError, MessageIdInvalidError
 from telethon.tl.custom import MessageButton
 
 import TGLogin
+import TuLingMessageBot
 
 if sys.platform == "darwin":
     import playsound as playsound
@@ -136,6 +132,7 @@ class AutoTelegram(object):
     sendMessageToPingYunGroupIs = False
     pinYunEmbyMessageCount = 0
     pingyunGroupObject = None
+    tg_login = None
 
     def playMusic(self):
         def run():
@@ -160,9 +157,9 @@ class AutoTelegram(object):
     async def main(self):
         # client = TelegramClient('cyounim', self.api_id, self.api_hash)name
         # client = TelegramClient(self.name, self.api_id, self.api_hash)
-        tg_login = await TGLogin.TgLogin.create(self.name)
+        self.tg_login = await TGLogin.TgLogin.create(self.name)
         # await client.start()
-        client = tg_login.get_client()
+        client = self.tg_login.get_client()
         dialogs = await client.get_dialogs()
         for dialog in dialogs:
             if dialog and dialog.name and pinYunEmbyTitle == dialog.name:
@@ -192,21 +189,41 @@ class AutoTelegram(object):
                             self.print("点击{}按钮失败 已经重试多次 还是失败 error:\n{}".format(btn.text, error))
 
         # 发送问候消息到品云
-        async def sendPinYunEmbyGroup():
-            if self.sendMessageToPingYunGroupIs and self.pinYunEmbyMessageCount > sendContentInt:
-                self.pinYunEmbyMessageCount = 0
-                self.sendMessageToPingYunGroupIs = False
+        async def sendPinYunEmbyGroup(count=10):
+            if self.sendMessageToPingYunGroupIs and self.pinYunEmbyMessageCount > 5:
                 try:
-                    content = self.sendPinYunEmbyMessageContent[
-                        random.randint(0, len(self.sendPinYunEmbyMessageContent) - 1)]
-                    nowTime = int(time.strftime("%H", time.localtime()))
-                    if nowTime > 20 or nowTime < 4:
-                        content = self.nightMessageContent[random.randint(0, len(self.nightMessageContent) - 1)]
-                    await client.send_message(self.pingyunGroupObject, content)
-
+                    # content = self.sendPinYunEmbyMessageContent[
+                    #     random.randint(0, len(self.sendPinYunEmbyMessageContent) - 1)]
+                    # nowTime = int(time.strftime("%H", time.localtime()))
+                    # if nowTime > 20 or nowTime < 4:
+                    #     content = self.nightMessageContent[random.randint(0, len(self.nightMessageContent) - 1)]
+                    # await client.send_message(self.pingyunGroupObject, content)
+                    await self.tg_login.update_dialos()
+                    contentMessage = self.tg_login.get_last_message_by_name(pinYunEmbyTitle)
+                    content = TuLingMessageBot.AotoBot().getContent(contentMessage.message)
+                    if content and len(content) > 0 \
+                            and not ("行不行" in content) \
+                            and not ("face:" in content) \
+                            and not ("你:" in content) \
+                            and not ("我:" in content) \
+                            and not ("发送:" in content) \
+                            and not ("签到:" in content) \
+                            and not ("伦家:" in content) \
+                            and not ("您:" in content) \
+                            :
+                        # await client.send_message(self.pingyunGroupObject, content)
+                        print(contentMessage.message + "++++" + content)
+                    else:
+                        if count > 0:
+                            await sendPinYunEmbyGroup(count - 1)
+                        return
                     self.print("发送了问候消息：{} 到品云".format(content))
                 except Exception as error:
                     self.print("发送消息 品云 错误 {}".format(error))
+                    await sendPinYunEmbyGroup(count - 1)
+                    return
+                self.pinYunEmbyMessageCount = 0
+                self.sendMessageToPingYunGroupIs = False
 
         async def sendMessageToEmbyGroup():
             if self.sendMessageToEmbyGroupIs and self.pronEmbyGropMessageCount > sendContentInt:
@@ -406,7 +423,7 @@ class AutoTelegram(object):
                                                          Channel) and message.chat.title == pinYunEmbyTitle:
                 self.pinYunEmbyMessageCount += 1  # self.pinYunEmbyMessageCount + 1 
                 await sendPinYunEmbyGroup()
-                if self.pinYunEmbyMessageCount > sendContentInt * 3 and not self.sendMessageToPingYunGroupIs:
+                if self.pinYunEmbyMessageCount > 1 * 2 and not self.sendMessageToPingYunGroupIs:
                     self.sendMessageToPingYunGroupIs = True
 
         # 编辑信息
