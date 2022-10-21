@@ -4,8 +4,7 @@ from telethon import TelegramClient
 from telethon.tl.types import PeerChannel
 
 import QuestionAnswer
-
-from TGLogin import GetClient
+import TGLogin
 
 messageCount = 2659185 + 300
 
@@ -15,8 +14,8 @@ PeerChannelName = "Pornemby 【考研交流群】"
 async def main():
     # client = TelegramClient('raynou', api_id, api_hash)
     # client = TelegramClient('kaikai', api_id, api_hash)
-    client = GetClient('kaikai')
-    await client.start()
+    client = (await TGLogin.TgLogin.create('kaikai')).get_client()
+    # await client.start()
     dialogs = await client.get_dialogs()
     print(dialogs)
     PeerChannel = None

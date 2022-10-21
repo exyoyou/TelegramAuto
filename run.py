@@ -11,7 +11,6 @@ from telethon import TelegramClient, events
 from telethon.tl.types import PeerChannel, PeerUser
 
 import TGLogin
-from TGLogin import GetClient
 
 '''
 api信息
@@ -56,7 +55,7 @@ count = 0
 async def main():
     # client = TelegramClient('cyounim_sing', api_id, api_hash)
     # client = GetClient("cyounim_sing")
-    tg_login = await TGLogin.TgLogin.create("kaikai")
+    tg_login = await TGLogin.TgLogin.create("cyounim_sing")
     client = tg_login.get_client()
     # await client.start()
 

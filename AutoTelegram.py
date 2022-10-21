@@ -13,6 +13,7 @@ import threading
 #     import ddddocr
 # except:
 #     print("没有安装 ddddocr")
+import time
 
 from telethon.errors import ChatWriteForbiddenError, MessageIdInvalidError
 from telethon.tl.custom import MessageButton
@@ -114,9 +115,19 @@ class AutoTelegram(object):
         "哈哈哈哈哈哈",
         "朋友们你们好呀",
         "说句话证明我还在群里",
-        "品云666 大爱",
-        "品云的大佬 你们好呀",
+        # "品云666 大爱", #这句话会被警告 扣分 所以屏蔽
+        "这里的大佬 你们好呀",
         "emby 是我发现的新大陆",
+    ]
+
+    nightMessageContent = [
+        "这么完了 大佬们还不睡觉",
+        "很晚了 睡了睡了",
+        "大佬们起来hi",
+        "别睡觉 熬夜到天亮",
+        "夜的生活才刚刚开始",
+        "一直熬夜一直爽",
+        "熬夜看电视，爽歪歪",
     ]
 
     pronEmbyGropMessageCount = 0
@@ -188,7 +199,11 @@ class AutoTelegram(object):
                 try:
                     content = self.sendPinYunEmbyMessageContent[
                         random.randint(0, len(self.sendPinYunEmbyMessageContent) - 1)]
+                    nowTime = int(time.strftime("%H", time.localtime()))
+                    if nowTime > 20 or nowTime < 4:
+                        content = self.nightMessageContent[random.randint(0, len(self.nightMessageContent) - 1)]
                     await client.send_message(self.pingyunGroupObject, content)
+
                     self.print("发送了问候消息：{} 到品云".format(content))
                 except Exception as error:
                     self.print("发送消息 品云 错误 {}".format(error))
