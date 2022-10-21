@@ -210,6 +210,7 @@ class AutoTelegram(object):
                             and not ("签到:" in content) \
                             and not ("伦家:" in content) \
                             and not ("您:" in content) \
+                            and not ("说:" in content) \
                             :
                         # await client.send_message(self.pingyunGroupObject, content)
                         print(contentMessage.message + "++++" + content)
